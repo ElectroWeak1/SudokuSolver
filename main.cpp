@@ -281,7 +281,7 @@ void ReplaceAll(std::string &string, const std::string &from, const std::string 
 void ProcessLines(std::istream &in, std::ostream &out) {
     std::string line;
     while (std::getline(in, line)) {
-        ReplaceAll(line, "-", "0");
+        ReplaceAll(line, ".", "0");
         SudokuArray sudoku = ParseSudoku(line);
         if (SolveSudoku(sudoku)) {
             Print(out, sudoku);
