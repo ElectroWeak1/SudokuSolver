@@ -325,14 +325,28 @@ void CheckSudoku(std::ifstream &inputFile) {
     std::string cell;
     while (inputFile >> cell) {
         if (cell.length() == 1) {
-            sudoku[x][y] = std::stoi(cell);
+            try {
+                sudoku[x][y] = std::stoi(cell);
+            } catch (const std::invalid_argument &ex) {
+                std::cerr << "Invalid sudoku data!";
+                return;
+            }
             ++numbersPlaced;
         } else if (cell[0] == 'u') {
             std::string userCell = cell.substr(1);
-            sudoku[x][y] = std::stoi(userCell);
+            try {
+                sudoku[x][y] = std::stoi(userCell);
+            } catch (const std::invalid_argument &ex) {
+                std::cerr << "Invalid sudoku data!";
+                return;
+            }
             ++numbersPlaced;
         } else {
             for (const char &character : cell) {
+                if (character < '0' || character > '9') {
+                    std::cerr << "Invalid sudoku data!";
+                    return;
+                }
                 allowedNumbers[x][y].set((character - '0') - 1);
             }
             sudoku[x][y] = 0;
