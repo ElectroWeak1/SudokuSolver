@@ -291,37 +291,6 @@ void ProcessLines(std::istream &in, std::ostream &out) {
     }
 }
 
-void PrintFancy(const SudokuArray &sudoku) {
-    for (size_t i = 0; i < SIZE; ++i) {
-        if (i != 0 && i % SECTION == 0)
-            std::cout << "-------------------\n";
-
-        for (size_t j = 0; j < SIZE; ++j) {
-            if (j != 0 && j % SECTION == 0) {
-                std::cout << "|";
-            }
-            std::cout << (sudoku[i][j] == 0 ? " " : std::to_string(sudoku[i][j])) << " ";
-        }
-        std::cout << '\n';
-    }
-    std::cout << '\n';
-}
-
-void PrintAllowedNumbers(const AllowedNumbers &allowedNumbers) {
-    for (size_t i = 0; i < SIZE; ++i) {
-        for (size_t j = 0; j < SIZE; ++j) {
-            for (unsigned k = 0; k < SIZE; ++k) {
-                if (allowedNumbers[i][j][k])
-                    std::cout << k + 1;
-                else
-                    std::cout << "-";
-            }
-            std::cout << " ";
-        }
-        std::cout << '\n';
-    }
-}
-
 bool MoveByOne(int &x, int &y) {
     ++y;
     if (y >= 9) {
