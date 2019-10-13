@@ -13,18 +13,22 @@ const int SECTION = 3;
 using SudokuArray = std::array<std::array<int, SIZE>, SIZE>;
 using AllowedNumbers = std::array<std::array<std::bitset<SIZE>, SIZE>, SIZE>;
 
-SudokuArray ParseSudoku(const std::string &input) {
+std::optional<SudokuArray> ParseSudoku(const std::string &input) {
     if (input.size() != SIZE * SIZE) {
         throw std::invalid_argument("Sudoku does not have correct number of cells\n");
     }
 
     SudokuArray sudoku;
     for (size_t i = 0; i < SIZE * SIZE; ++i) {
+        if (input[i] < '0' || input[i] > '9') {
+            std::cerr << "Invalid character in input data!\n";
+            return {};
+        }
         size_t j = i / 9;
         sudoku[j][i - (j * 9)] = input[i] - '0';
     }
 
-    return sudoku;
+    return {sudoku};
 }
 
 void Print(std::ostream &out, const SudokuArray &sudoku) {
@@ -282,11 +286,13 @@ void ProcessLines(std::istream &in, std::ostream &out) {
     std::string line;
     while (std::getline(in, line)) {
         ReplaceAll(line, ".", "0");
-        SudokuArray sudoku = ParseSudoku(line);
-        if (SolveSudoku(sudoku)) {
-            Print(out, sudoku);
-        } else {
-            out << '\n';
+        std::optional<SudokuArray> sudoku = ParseSudoku(line);
+        if (sudoku.has_value()) {
+            if (SolveSudoku(*sudoku)) {
+                Print(out, *sudoku);
+            } else {
+                out << '\n';
+            }
         }
     }
 }
