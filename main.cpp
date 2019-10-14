@@ -141,7 +141,7 @@ int PlaceOneSectionAllowed(SudokuArray &sudoku, AllowedNumbers &allowedNumbers) 
     for (size_t sectionX = 0; sectionX < SIZE; sectionX += SECTION) {
         for (size_t sectionY = 0; sectionY < SIZE; sectionY += SECTION) {
             for (unsigned k = 1; k <= 9; ++k) {
-				bool found = false;
+                bool found = false;
                 size_t allowedX = 0;
                 size_t allowedY = 0;
                 bool skip = false;
@@ -149,11 +149,11 @@ int PlaceOneSectionAllowed(SudokuArray &sudoku, AllowedNumbers &allowedNumbers) 
                     for (size_t cellY = sectionY; cellY < sectionY + SECTION; ++cellY) {
                         if (allowedNumbers[cellX][cellY][k - 1]) {
                             if (!found) {
-								found = true;
+                                found = true;
                                 allowedX = cellX;
                                 allowedY = cellY;
                             } else {
-								found = false;
+                                found = false;
                                 skip = true;
                                 break;
                             }
@@ -175,15 +175,15 @@ int PlaceOneRowOrColumnAllowed(SudokuArray &sudoku, AllowedNumbers &allowedNumbe
     for (unsigned value = 1; value <= 9; ++value) {
         // Rows
         for (size_t i = 0; i < SIZE; ++i) {
-			bool found = false;
+            bool found = false;
             size_t allowedY = 0;
             for (size_t j = 0; j < SIZE; ++j) {
                 if (allowedNumbers[i][j][value - 1]) {
                     if (!found) {
-						found = true;
+                        found = true;
                         allowedY = j;
                     } else {
-						found = false;
+                        found = false;
                         allowedY = -1;
                         break;
                     }
@@ -197,15 +197,15 @@ int PlaceOneRowOrColumnAllowed(SudokuArray &sudoku, AllowedNumbers &allowedNumbe
 
         // Columns
         for (size_t j = 0; j < SIZE; ++j) {
-			bool found = false;
+            bool found = false;
             size_t allowedX = 0;
             for (size_t i = 0; i < SIZE; ++i) {
                 if (allowedNumbers[i][j][value - 1]) {
                     if (!found) {
-						found = true;
+                        found = true;
                         allowedX = i;
                     } else {
-						found = false;
+                        found = false;
                         break;
                     }
                 }
@@ -334,7 +334,7 @@ void CheckSudoku(std::ifstream &inputFile) {
         if (cell.length() == 1) {
             try {
                 sudoku[x][y] = std::stoi(cell);
-            } catch (const std::invalid_argument&) {
+            } catch (const std::invalid_argument &) {
                 std::cerr << "Invalid sudoku data!";
                 return;
             }
@@ -354,7 +354,7 @@ void CheckSudoku(std::ifstream &inputFile) {
                     std::cerr << "Invalid sudoku data!";
                     return;
                 }
-				unsigned index = (character - '0') - 1;
+                unsigned index = (character - '0') - 1;
                 allowedNumbers[x][y].set(index);
             }
             sudoku[x][y] = 0;
